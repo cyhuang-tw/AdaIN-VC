@@ -1,5 +1,5 @@
 SpeakerEncoder:
-    c_in: 512
+    c_in: 80
     c_h: 128
     c_out: 128
     kernel_size: 5
@@ -12,7 +12,7 @@ SpeakerEncoder:
     act: 'relu'
     dropout_rate: 0
 ContentEncoder:
-    c_in: 512
+    c_in: 80
     c_h: 128
     c_out: 128
     kernel_size: 5
@@ -27,7 +27,7 @@ Decoder:
     c_in: 128
     c_cond: 128
     c_h: 128
-    c_out: 512
+    c_out: 80
     kernel_size: 5
     n_conv_blocks: 6
     upsample: [2, 1, 2, 1, 2, 1]
@@ -49,4 +49,4 @@ optimizer:
 lambda:
     lambda_rec: 10
     lambda_kl: 1
-annealing_iters: 20000
+    kl_annealing: 20000

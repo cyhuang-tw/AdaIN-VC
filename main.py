@@ -1,31 +1,27 @@
-from argparse import ArgumentParser, Namespace
-import torch
+from argparse import ArgumentParser
+import yaml
 from solver import Solver
-import yaml 
-import sys
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('-config', '-c', default='config.yaml')
-    parser.add_argument('-data_dir', '-d', 
-            default='/storage/feature/LibriTTS/sr_24000_mel_norm')
-    parser.add_argument('-train_set', default='train')
-    parser.add_argument('-train_index_file', default='train_samples_64.json')
-    parser.add_argument('-logdir', default='log/')
-    parser.add_argument('--load_model', action='store_true')
-    parser.add_argument('--load_opt', action='store_true')
-    parser.add_argument('-store_model_path', default='/storage/model/adaptive_vc/model')
-    parser.add_argument('-load_model_path', default='/storage/model/adaptive_vc/model')
-    parser.add_argument('-summary_steps', default=100, type=int)
-    parser.add_argument('-save_steps', default=5000, type=int)
-    parser.add_argument('-tag', '-t', default='init')
-    parser.add_argument('-iters', default=0, type=int)
+    parser.add_argument('--config', '-c', type=str, default='config.yaml')
+    parser.add_argument('--data_dir', '-d', type=str, default='vctk_data')
+    parser.add_argument('--train_set', type=str, default='train')
+    parser.add_argument('--train_index_file', type=str, default='train_samples_64.json')
+    parser.add_argument('--log_dir', type=str, default='log')
+    parser.add_argument('--load_model', action='store_true', default=False)
+    parser.add_argument('--save_path', type=str, default='vctk_model')
+    parser.add_argument('--load_path', type=str, default=None)
+    parser.add_argument('--summary_steps', type=int, default=500)
+    parser.add_argument('--save_steps', type=int, default=5000)
+    parser.add_argument('--tag', '-t', type=str, default='init')
+    parser.add_argument('--iters', type=int, default=500000)
 
     args = parser.parse_args()
-    
-    # load config file 
+
+    # load config file
     with open(args.config) as f:
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.FullLoader)
 
     solver = Solver(config=config, args=args)
 

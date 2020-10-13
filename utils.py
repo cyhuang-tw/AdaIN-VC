@@ -1,13 +1,18 @@
-import torch 
-import numpy as np
+import torch
 from tensorboardX import SummaryWriter
-import editdistance
-import torch.nn as nn
-import torch.nn.init as init
 
 def cc(net):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     return net.to(device)
+
+def infinite_iter(iterable):
+    it = iter(iterable)
+    while True:
+        try:
+            ret = next(it)
+            yield ret
+        except StopIteration:
+            it = iter(iterable)
 
 class Logger(object):
     def __init__(self, logdir='./log'):
@@ -23,13 +28,4 @@ class Logger(object):
         self.writer.add_text(tag, value, step)
 
     def audio_summary(self, tag, value, step, sr):
-        writer.add_audio(tag, value, step, sample_rate=sr)
-
-def infinite_iter(iterable):
-    it = iter(iterable)
-    while True:
-        try:
-            ret = next(it)
-            yield ret
-        except StopIteration:
-            it = iter(iterable)
+        self.writer.add_audio(tag, value, step, sample_rate=sr)

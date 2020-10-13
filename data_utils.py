@@ -1,30 +1,28 @@
-import torch
-from torch.utils.data import Dataset
-import os 
-import pickle 
+import pickle
 import json
 import numpy as np
 import torch
-from torch.utils.data import DataLoader
+from torch.utils.data import Dataset, DataLoader
 
 class CollateFn(object):
     def __init__(self, frame_size):
         self.frame_size = frame_size
 
     def make_frames(self, tensor):
-        out = tensor.view(tensor.size(0), tensor.size(1) // self.frame_size, self.frame_size * tensor.size(2))
+        out = tensor.view(tensor.size(0), tensor.size(1) // self.frame_size,\
+                          self.frame_size * tensor.size(2))
         out = out.transpose(1, 2)
-        return out 
+        return out
 
     def __call__(self, l):
         data_tensor = torch.from_numpy(np.array(l))
         segment = self.make_frames(data_tensor)
         return segment
 
-def get_data_loader(dataset, batch_size, frame_size, shuffle=True, num_workers=4, drop_last=False):
-    _collate_fn = CollateFn(frame_size=frame_size) 
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, 
-            num_workers=num_workers, collate_fn=_collate_fn, pin_memory=True)
+def get_data_loader(dataset, batch_size, frame_size, shuffle=True, num_workers=4):
+    _collate_fn = CollateFn(frame_size=frame_size)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
+                            num_workers=num_workers, collate_fn=_collate_fn, pin_memory=True)
     return dataloader
 
 class SequenceDataset(Dataset):
@@ -55,4 +53,3 @@ class PickleDataset(Dataset):
 
     def __len__(self):
         return len(self.indexes)
-
