@@ -42,7 +42,7 @@ class Inferencer(object):
                                bits=params["preprocessing"]["bits"],
                                hop_length=params["preprocessing"]["hop_length"])
         self.vocoder = cc(self.vocoder)
-        ckpt_path = os.path.join(args.vocoder, 'model.ckpt-100000.pt')
+        ckpt_path = os.path.join(args.vocoder_path, 'model.ckpt-100000.pt')
         ckpt = torch.load(ckpt_path, map_location=lambda storage, loc: storage)
         self.vocoder.load_state_dict(ckpt["model"])
 
