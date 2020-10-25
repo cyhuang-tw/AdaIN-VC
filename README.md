@@ -38,12 +38,13 @@ The training starts with either ```main.py``` or ```train.sh```.
 
 # Inference
 You can use ```inference.py``` to perform one-shot voice conversion.
+The pre-trained model is available [here](https://drive.google.com/file/d/1d_llv1qaCpPjioReh4AT8K_-qqG2zoIx/view?usp=sharing).
 ```
 python inference.py <model_path> <source> <target> <output>
 ```
 - **model_path**: The path of trained model directory.
 - **source**: The source utterance providing linguistic content.
-- **tageget**: The utterance providing target speaker timbre.
+- **target**: The utterance providing target speaker timbre.
 - **output**: The path of converted utterance.
 - **--vocoder_path**: The path of vocoder directory.
 
