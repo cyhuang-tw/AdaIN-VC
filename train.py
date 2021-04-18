@@ -70,7 +70,7 @@ def main(
     for step in pbar:
         # get features
         org_mels = next(train_iter)
-        org_mels = org_mels.flatten(0, 1).transpose(-1, -2) / 20.0
+        org_mels = org_mels.flatten(0, 1).transpose(-1, -2)
         org_mels = org_mels.to(device)
 
         # reconstruction
@@ -107,7 +107,7 @@ def main(
             valid_loss = 0
             for _ in range(valid_steps):
                 org_mels = next(valid_iter)
-                org_mels = org_mels.flatten(0, 1).transpose(-1, -2) / 20.0
+                org_mels = org_mels.flatten(0, 1).transpose(-1, -2)
                 org_mels = org_mels.to(device)
                 mu, log_sigma, emb, rec_mels = model(org_mels)
                 loss = criterion(rec_mels, org_mels)

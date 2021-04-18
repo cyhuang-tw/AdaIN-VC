@@ -21,6 +21,8 @@ Besides, this implementation supports torch.jit, so the full model can be loaded
 model = torch.jit.load(model_path)
 ```
 
+Pre-trained models are available [here](https://drive.google.com/drive/folders/1MacKgXGA4Ad0O_c6W5MlkZMG0B8IzaM-?usp=sharing).
+
 ## Preprocess
 
 The code `preprocess.py` extracts features from raw audios.

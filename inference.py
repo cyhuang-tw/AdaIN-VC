@@ -25,11 +25,11 @@ def main(
     src = wav2mel(src, src_sr).T.unsqueeze(0).to(device)
     tgt = wav2mel(tgt, tgt_sr).T.unsqueeze(0).to(device)
 
-    src = src / 20.0
-    tgt = tgt / 20.0
+    # src = src / 20.0
+    # tgt = tgt / 20.0
 
     cvt = model.inference(src, tgt)
-    cvt = cvt * 20.0
+    # cvt = cvt * 20.0
 
     with torch.no_grad():
         wav = vocoder.generate([cvt.squeeze(0).data.T])
