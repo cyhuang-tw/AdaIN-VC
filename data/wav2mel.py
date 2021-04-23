@@ -127,7 +127,7 @@ class LogMelspectrogram(torch.nn.Module):
             ),
             dim=-1,
         )
-        mel_tensor = self.melspectrogram(wav_tensor).squeeze(0).T  # (time, n_mels)
+        mel_tensor = self.melspectrogram(wav_tensor).squeeze(0)  # (n_mels, time)
         mel_tensor = 20 * mel_tensor.clamp(min=1e-9).log10()
         mel_tensor = (mel_tensor - self.ref_db + self.dc_db) / self.dc_db
         return mel_tensor

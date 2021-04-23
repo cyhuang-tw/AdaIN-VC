@@ -22,14 +22,10 @@ def main(
     src, src_sr = torchaudio.load(source)
     tgt, tgt_sr = torchaudio.load(target)
 
-    src = wav2mel(src, src_sr).T.unsqueeze(0).to(device)
-    tgt = wav2mel(tgt, tgt_sr).T.unsqueeze(0).to(device)
-
-    # src = src / 20.0
-    # tgt = tgt / 20.0
+    src = wav2mel(src, src_sr)[None, :].to(device)
+    tgt = wav2mel(tgt, tgt_sr)[None, :].to(device)
 
     cvt = model.inference(src, tgt)
-    # cvt = cvt * 20.0
 
     with torch.no_grad():
         wav = vocoder.generate([cvt.squeeze(0).data.T])

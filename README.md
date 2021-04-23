@@ -9,7 +9,6 @@ This is an unofficial implementation of the paper [One-shot Voice Conversion by 
 - torchaudio >= 0.7.0
 - numpy >= 1.16.0
 - librosa >= 0.6.3
-- tensorboardX
 
 ## Differences from the official implementation
 

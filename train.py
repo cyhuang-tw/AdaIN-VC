@@ -4,8 +4,8 @@ import os
 import torch
 import torch.nn as nn
 import yaml
-from tensorboardX import SummaryWriter
 from torch.utils.data import random_split
+from torch.utils.tensorboard import SummaryWriter
 from tqdm.auto import trange
 
 from data import InfiniteDataLoader, SpeakerDataset, infinite_iterator
@@ -70,7 +70,7 @@ def main(
     for step in pbar:
         # get features
         org_mels = next(train_iter)
-        org_mels = org_mels.flatten(0, 1).transpose(-1, -2)
+        org_mels = org_mels.flatten(0, 1)
         org_mels = org_mels.to(device)
 
         # reconstruction
@@ -107,7 +107,7 @@ def main(
             valid_loss = 0
             for _ in range(valid_steps):
                 org_mels = next(valid_iter)
-                org_mels = org_mels.flatten(0, 1).transpose(-1, -2)
+                org_mels = org_mels.flatten(0, 1)
                 org_mels = org_mels.to(device)
                 mu, log_sigma, emb, rec_mels = model(org_mels)
                 loss = criterion(rec_mels, org_mels)

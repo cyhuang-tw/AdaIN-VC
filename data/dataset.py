@@ -21,8 +21,8 @@ class SpeakerDataset(Dataset):
         spk = self.id2spk[index]
         mel_files = random.sample(self.meta_data[spk], k=self.n_uttrs)
         mels = [torch.load(os.path.join(self.data_dir, file)) for file in mel_files]
-        starts = [random.randint(0, len(m) - self.segment) for m in mels]
+        starts = [random.randint(0, m.shape[-1] - self.segment) for m in mels]
         mels = torch.stack(
-            [m[start : (start + self.segment)] for (m, start) in zip(mels, starts)]
+            [m[:, start : (start + self.segment)] for (m, start) in zip(mels, starts)]
         )
         return mels
