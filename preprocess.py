@@ -35,7 +35,7 @@ def main(data_dir: str, save_dir: str, segment: int):
         spk_dir = os.path.join(data_dir, spk)
         wav_files = librosa.util.find_files(spk_dir)
         mels = [file2mel(wav_file) for wav_file in wav_files]
-        mels = list(filter(lambda x: x is not None and len(x) > segment, mels))
+        mels = list(filter(lambda x: x is not None and x.shape[-1] > segment, mels))
         rnd_paths = [f"{uuid4().hex}.pt" for _ in range(len(mels))]
         dummy = [
             torch.save(mel, os.path.join(save_dir, path))
